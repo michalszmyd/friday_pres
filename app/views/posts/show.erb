@@ -43,6 +43,13 @@
 
       <div class="tab-pane fade" id="post-activities">
         <h5> Last activities </h5>
+        <% @post.activities.each do |activity| %>
+          <div>
+            <b><%= activity.user.email %></b>
+            <i><%= activity.type %></i> with:
+            <i><%= activity.description %></i>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

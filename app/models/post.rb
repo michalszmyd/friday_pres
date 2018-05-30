@@ -5,4 +5,8 @@ class Post < ApplicationRecord
   has_many :reactions, -> { order(created_at: :desc) }, inverse_of: :post
 
   validates :title, :description, :user_id, presence: true
+
+  def activities
+    Activities.new(post_id: id).order(created_at: :desc).limit(5).includes(:user)
+  end
 end
