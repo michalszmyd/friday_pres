@@ -1,0 +1,41 @@
+<div class="jumbotron">
+  <div class="container post">
+    <h2><%= @post.title %></h5>
+    <p><%= @post.description%></p>
+
+    <div class="activities">
+      <ul  class="nav nav-pills">
+  			<li class="active">
+          <a href="#comments" data-toggle="tab" class="btn btn-light active">Comments</a>
+  			</li>
+  			<li>
+          <a href="#likes" data-toggle="tab" class="btn btn-light">Likes</a>
+  			</li>
+  			<li>
+          <a href="#reactions" data-toggle="tab" class="btn btn-light">Reactions</a>
+  			</li>
+    		<li>
+          <a href="#post-activities" data-toggle="tab" class="btn btn-light">Last activities</a>
+  			</li>
+  		</ul>
+    </div>
+
+    <div id="activities-label" class="tab-content">
+      <div class="tab-pane fade in active show" id="comments">
+        <h5> Comments </h5>
+      </div>
+
+      <div class="tab-pane fade" id="likes">
+        <h5> Likes </h5>
+      </div>
+
+      <div class="tab-pane fade" id="reactions">
+        <h5> Reactions </h5>
+      </div>
+
+      <div class="tab-pane fade" id="post-activities">
+        <h5> Last activities </h5>
+      </div>
+    </div>
+  </div>
+</div>
