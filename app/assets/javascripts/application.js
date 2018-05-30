@@ -16,3 +16,36 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+
+$(document).ready(function(){
+  $('#new_comment').on('submit', function(e) {
+    e.preventDefault();
+
+    form        = $(this);
+    commentBody = form.find('input[name="comment[body]"]').val();
+    postId      = form.data('post-id');
+    authenticityToken = $('meta[name=csrf-token]').attr('content');
+
+    $.ajax({
+      url: '/posts/' + postId + '/comments',
+      method: 'POST',
+      dataType: 'JSON',
+      data: { comment: { body: commentBody }, authenticity_token: authenticityToken },
+      success: function(comment) {
+        $('.post-comments').prepend(renderComment(comment));
+        form.find('input[name="comment[body]"]').val('');
+        form.find('input[type="submit"]').prop('disabled', false);
+      },
+      error: function(e) {
+        alert('oops');
+      }
+    })
+  });
+
+  function renderComment(comment) {
+    return '<div class="comment">' +
+      '<b>' + comment.user_email + '</b> said:' +
+      '<p>' + comment.body + '</p>' +
+    '</div>';
+  }
+});

@@ -22,7 +22,13 @@
 
     <div id="activities-label" class="tab-content">
       <div class="tab-pane fade in active show" id="comments">
-        <h5> Comments </h5>
+        <h6> Add new comment </h6>
+        <%= render 'posts/partials/comment_form' %>
+        <div class="post-comments">
+          <% @post.comments.each do |comment| %>
+            <%= render partial: 'posts/partials/comment', locals: { comment: comment } %>
+          <% end %>
+        </div>
       </div>
 
       <div class="tab-pane fade" id="likes">
