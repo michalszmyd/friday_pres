@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resource :home, only: :show, controller: :home
   resources :posts do
     resources :comments, only: :create
+    resources :reactions, only: :create
     resources :likes, only: :create do
       delete :destroy, on: :collection
     end

@@ -1,0 +1,4 @@
+<% reaction = current_user.reactions.find_by(post_id: @post.id) %>
+<%= link_to 'Smile :)', 'javascript:void(0)', data: { post_id: @post.id, type: 'smile' }, class: "btn #{reaction&.name == 'smile' ? 'btn-info' : 'btn-primary'} reaction-button" %>
+<%= link_to 'Sad :C', 'javascript:void(0)', data: { post_id: @post.id, type: 'sad' }, class: "btn #{reaction&.name == 'sad' ? 'btn-info' : 'btn-primary'} reaction-button" %>
+<%= link_to 'Angry :Q', 'javascript:void(0)', data: { post_id: @post.id, type: 'angry' }, class: "btn #{reaction&.name == 'angry' ? 'btn-info' : 'btn-primary'} reaction-button" %>

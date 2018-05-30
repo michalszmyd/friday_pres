@@ -42,6 +42,29 @@ $(document).ready(function(){
     })
   });
 
+  $('.reaction-button').on('click', function(e) {
+    reaction     = $(this);
+    reactionType = reaction.data('type');
+    postId       = reaction.data('post-id');
+    authenticityToken = $('meta[name=csrf-token]').attr('content');
+
+    $.ajax({
+      url: '/posts/' + postId + '/reactions',
+      method: 'POST',
+      dataType: 'JSON',
+      data: { reaction: { name: reactionType }, authenticity_token: authenticityToken },
+      success: function(comment) {
+        buttons = $('.btn-info');
+        buttons.addClass('btn-primary');
+        buttons.removeClass('btn-info');
+        reaction.addClass('btn-info');
+      },
+      error: function(e) {
+        alert('oops');
+      }
+    })
+  });
+
   $('.like-button').on('click', function(e) {
     e.preventDefault();
 
