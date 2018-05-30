@@ -42,10 +42,41 @@ $(document).ready(function(){
     })
   });
 
-  function renderComment(comment) {
-    return '<div class="comment">' +
-      '<b>' + comment.user_email + '</b> said:' +
-      '<p>' + comment.body + '</p>' +
-    '</div>';
-  }
+  $('.like-button').on('click', function(e) {
+    e.preventDefault();
+
+    like   = $(this);
+    postId = like.data('post-id');
+    likeMethod = like.data('method');
+    authenticityToken = $('meta[name=csrf-token]').attr('content');
+
+    $.ajax({
+      url: '/posts/' + postId + '/likes',
+      method: likeMethod,
+      dataType: 'JSON',
+      data: { authenticity_token: authenticityToken },
+      success: function(comment) {
+        if (likeMethod == 'post') {
+          like.addClass('btn-info');
+          like.html('Unlike');
+          like.data('method', 'delete');
+        }
+        else {
+          like.addClass('btn-info');
+          like.html('Like');
+          like.data('method', 'post');
+        }
+      },
+      error: function(e) {
+        alert('oops');
+      }
+    });
+  });
 });
+
+function renderComment(comment) {
+  return '<div class="comment">' +
+    '<b>' + comment.user_email + '</b> said:' +
+    '<p>' + comment.body + '</p>' +
+  '</div>';
+}
