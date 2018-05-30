@@ -7,6 +7,6 @@ class Post < ApplicationRecord
   validates :title, :description, :user_id, presence: true
 
   def activities
-    Activities.new(post_id: id).order(created_at: :desc).limit(5).includes(:user)
+    Activities.new(post_id: id).order(created_at: :desc).limit(5).user_includes
   end
 end

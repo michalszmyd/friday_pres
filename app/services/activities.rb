@@ -4,15 +4,15 @@ class Activities
   # Activity = Struct.new(:id, :user_id, :type, :description, :created_at)
 
   def initialize(post_id:)
-    @post_id = post_id
-    @finished_query = ''
+    @post_id   = post_id
+    @sql_chain = ''
   end
 
   def results
     @results ||= ActiveRecord::Base.connection.execute(sanitized_sql).map { |row| activity_create(row) }
   end
 
-  def includes(name)
+  def user_includes
     @users = {}
     users  = User.where(id: results.map(&:user_id).uniq)
     users.each do |user|
@@ -25,21 +25,21 @@ class Activities
   end
 
   def limit(number)
-    @finished_query += " LIMIT #{number}"
+    @sql_chain += " LIMIT #{number}"
     self
   end
 
   def offset(number)
-    @finished_query += " OFFSET #{number}"
+    @sql_chain += " OFFSET #{number}"
     self
   end
 
   def order(data)
-    @finished_query +=
+    @sql_chain +=
       if data.is_a?(Symbol)
         " ORDER BY #{data} ASC"
       elsif data.is_a?(Hash)
-        " ORDER BY #{data.keys.join} #{data.values.join}"
+        " ORDER BY #{data.keys.join} #{data.values.join.upcase}"
       end
     self
   end
@@ -81,7 +81,7 @@ class Activities
           name AS description,
           created_at
         FROM reactions WHERE reactions.post_id = :post_id
-      #{@finished_query}
+      #{@sql_chain}
     )
   end
 
