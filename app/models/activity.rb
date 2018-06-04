@@ -2,7 +2,7 @@
 
 class Activity
   attr_reader :id, :user_id, :type, :description, :created_at
-  attr_accessor :user
+  attr_writer :user
 
   def initialize(id:, user_id:, type:, description:, created_at:)
     @id          = id
